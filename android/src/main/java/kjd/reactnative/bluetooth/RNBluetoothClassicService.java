@@ -497,9 +497,11 @@ public class RNBluetoothClassicService {
          */
         void write(byte[] buffer) {
             try {
-                String str = new String(buffer, "UTF-8");
-                if (D) Log.d(TAG, "Write in thread " + str);
-                mmOutStream.write(str.getBytes());
+                // String str = new String(buffer, "UTF-8");
+                // if (D) Log.d(TAG, "Write in thread " + str);
+                // mmOutStream.write(str.getBytes());
+                if (D) Log.d(TAG, "Write in thread " + buffer);
+                mmOutStream.write(buffer);
             } catch (Exception e) {
                 Log.e(TAG, "Exception during write", e);
                 listener.onError(e);

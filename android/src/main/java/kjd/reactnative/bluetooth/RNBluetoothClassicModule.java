@@ -630,7 +630,6 @@ public class RNBluetoothClassicModule
     promise.reject(new Error("No bluetooth device connected"));
   }
 
-
   /**
    * Attempts to write to the device.  The message string should be encoded as Base64
    *
@@ -805,6 +804,17 @@ public class RNBluetoothClassicModule
     sendEvent(BluetoothEvent.ERROR.code, params);
   }
 
+  private static final char[] HEX_ARRAY = "0123456789ABCDEF".toCharArray();
+  public static String bytesToHex(byte[] bytes) {
+      char[] hexChars = new char[bytes.length * 2];
+      for (int j = 0; j < bytes.length; j++) {
+          int v = bytes[j] & 0xFF;
+          hexChars[j * 2] = HEX_ARRAY[v >>> 4];
+          hexChars[j * 2 + 1] = HEX_ARRAY[v & 0x0F];
+      }
+      return new String(hexChars);
+  }
+
   /**
    * Handles the data input from the device.  First it appends the new data to the buffer, then
    * it attempts to get all the data segments (delimiter) based on what is available.  This is
@@ -824,8 +834,9 @@ public class RNBluetoothClassicModule
   public void onReceivedData(BluetoothDevice device, byte[] data) {
     String msg = String.format("Received %d bytes from device %s", data.length, device.getName());
     Log.d(TAG, msg);
-
-    mBuffer.append(new String(data, mCharset));
+    String hexData = bytesToHex(data);
+    mBuffer.append(hexData);
+    // mBuffer.append(new String(data, mCharset));
 
     if (!mReadObserving.get()) {
       Log.d(TAG, "No BTEvent.READ listeners are registered, skipping handling of the event");
