@@ -1,7 +1,7 @@
 
 # react-native-bluetooth-classic-hex
 
-React Native Bluetooth Classic Hex is basically to provide the HEX data communtication. 
+React Native Bluetooth Classic Hex is basically to provide the Hexadecimal support for data communtication. 
 
 Based off the [react-native-bluetooth-classic](https://github.com/kenjdavidson/react-native-bluetooth-classic), and updated to support the Hexadecimal data communication.
 
